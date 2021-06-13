@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .nav{
+            display:flex;
+            background-color: black;
+            height:54px;
+            justify-content: space-around;
+        }
+        li{
+            list-style:none;
+            float:left;
+            color:white;
+            line-height:54px;
+        }
+        .nav>li:nth-child(1){
+            padding-left:100px;
+        }
+        .nav>li:nth-child(2){
+            color:orange;
+        }
+        .nav>li:nth-child(2),.nav>li:nth-child(3),.nav>li:nth-child(4),.nav>li:nth-child(5){
+            font-size:14px;
+            font-family: 黑体;
+        }
+        .nav>li:nth-child(6), .nav>li:nth-child(8),.nav>li:nth-child(10),.nav>li:nth-child(12){
+            margin-top:18px;
+            margin-right:-24px;
+            height:18px;
+            width:18px;
+            background:url(./images/2.png);
+            background-position: -230px -24px;
+        }
+        .nav>li:nth-child(7),.nav>li:nth-child(9),.nav>li:nth-child(11),.nav>li:nth-child(13){
+            font-size: 4px;
+            opacity:0.6;
+        }
+        .nav>li:last-child{
+            padding-top:5px;
+            padding-right:100px;
+        }
+        .nav>li:nth-child(14),.nav>li:nth-child(15){
+            font-size:8px;
+            font-family: 黑体;
+        }
+        .song{
+            width:650px;
+            height:650px;
+            float:left;
+            background:rgb(206, 203, 203);
+        }
+        .song>p{
+            text-align: center;
+            font-size: 10px;
+        }
+        .song>p:nth-child(1){
+            font-size: 30px;
+        }
+        .song>p:nth-child(2){
+            font-size:15px;
+            opacity: 0.8;
+        }
+        span:nth-child(1),span:nth-child(2){
+            color:orange;
+            padding-left:10px;
+            padding-right:10px;
+        }
+        span:nth-child(3){
+            color:orange;
+        }
+        span:nth-child(3)::before{
+            padding:10px;
+            content: url(./images/6.jpg);
+        }
+        .song>p:nth-child(3){
+            font-size:3px;
+        }
+        .player{
+            float:left;
+            width:597px;
+            height:650px;
+            background:rgb(206, 203, 203);
+        }
+        #mycanvas{
+            border-radius: 50% ;
+            padding:50px;
+        }
+        #my-canvas{
+            float:left;
+            border-radius: 50% ;
+            padding:80px;
+        }
+        .playerMid{
+            width:500px;
+        }
+        .musicControll {
+	        float: left;
+	        margin-left: 24px;
+        }
+        .play {
+            background:url(./images/2.png);
+	        width: 40px;
+	        height: 40px;
+	        background-position: -137px -113px;
+        }
+        .play:hover {
+	        background-position: -137px -153px;
+        }
+        #prograssBar {
+	        float: left;
+	        position: relative;
+            left:8px;
+            top:8px;
+	        width: 290px;
+	        height: 4px;
+	        background: url(./images/7.png);
+	        margin: 10px 10px 0 0;
+        }
+        .prograssBar {
+	        width: 0px;
+	        height: 4px;
+	        background: #ffcd2d;
+        }
+        #wp_bufBar {
+	        width: 0px;
+	        height: 4px;
+	        background: url(./images/7.png);
+        }
+        #wp_processBtn {
+	        width: 10px;
+	        height: 10px;
+	        background: url(./images/2.png) 0 -128px;
+	        position: absolute;
+	        top: -3px;
+        }
+        .playerRight {
+	        float: left;
+        }
+        #wp_playTime {
+	        float: left;
+	        font-size: 12px;
+	        color: #fff;
+	        display: inline
+        }
+        #controllBtn {
+	        float: left;
+	        height: 60px;
+	        position: relative
+        }
+        #wp_mute {
+	        position: relative;
+	        width: 20px;
+	        height: 16px;
+	        background: url(./images/2.png) no-repeat -263px -113px;
+	        left:5px;
+            top:12px;
+	        z-index: 13;
+        }
+        .onloadBox{
+            margin-top: 80px;
+            margin-left:120px;
+            position:absolute;
+            width:180px;
+            height:40px;
+            background:purple;
+            border-radius: 40%;
+            color:black;
+        }
+        .onload{
+            position:relative;
+            float:left;
+            width:20px;
+            height:20px;
+            margin:8px;
+            background:url(./images/2.png);
+            background-position: -48px -15px;
+        }
+        .onloadBox>p{
+            position:relative;
+            float:left;
+        }
+        .listening{
+            float:left;
+            margin-top: 90px;
+            margin-left:-60px;
+            width:200px;
+            height:50px;
+            background: rgb(199, 228, 241);
+            border-radius: 25%;
+        }
+        .listening>p{
+            margin-left:10px;
+            color:rgb(226, 190, 190);
+            font-size: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <li class="nav-pic"><img src="./images/3.jpg"></li>
+        <li>首页</li>
+        <li>榜单</li>
+        <li>歌手</li>
+        <li>下载酷我客户端</li>
+        <li></li>
+        <li>美女秀</li>
+        <li></li>
+        <li>酷我耳机</li>
+        <li></li>
+        <li>VIP会员</li>
+        <li></li>
+        <li>i听</li>
+        <li>更多服务</li>
+        <li>登录</li>
+        <li>^</li>
+        <li><img src="./images/5.png"></li>
+    </div>
+    <div class="song">
+        <p>喜羊羊</p>
+        <p>专辑:<span>儿歌大全</span>歌手:<span>华语群星</span>分享<span>评论</span></p>
+        <p>上传时间：2015-10-02 歌曲来源：网络</p>
+        <hr style="opacity: 0.3;">
+        <p>在所有天气 拥有叫人 大小的力量</p>
+        <p>虽然我只是羊</p>
+        <p>虽然我只是羊</p>
+        <p>喜羊羊 美羊羊 懒洋洋 沸羊羊</p>
+        <p>慢羊羊 软绵绵 红太郎 灰太狼</p>
+    </div>
+    <div class="player">
+        <div>
+            <canvas id="mycanvas" width="260" height="260"></canvas>
+        </div>
+        <audio autoplay="autoplay" id="mymusic">
+            <source src="./images/古倩敏 - 别看我只是一只羊.mp3" type="audio/mp3"></audio>
+        <div class="playerMid">
+            <div class="musicControll">
+                <div class="play" id="wp_playBtn"></div>
+            </div>
+            <div id="prograssBar">
+                <div id="wp_bufBar">
+                    <div class="prograssBar" id="wp_processBar"></div>
+                    <a href="##" class="schedule_btn" id="wp_processBtn" style="left: 0;"></a>
+                </div>
+            </div>
+            <div class="playerRight">
+                <p id="wp_playTime" class="opacity">00.00</p>
+                <div id="controllBtn">
+                    <div class="sound" id="wp_mute">
+                        <div id="soundBox">
+                          <div class="soundPro">
+                            <div class="soundPro" id="wp_volBar"></div>
+                            <a href="##" id="wp_volBtn"></a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="onloadBox">
+            <div class="onload"></div>
+            <p>免费下载这首歌</p>
+        </div>
+        <div>
+            <canvas id="my-canvas" width="70" height="70"></canvas>
+            <div class="listening">
+                <p>郭子仪--H5班<p>
+                <span>喜羊羊与灰太狼</span>
+                <span>去现场></span>
+            </div>
+        </div>
+    </div>
+    <div class="discuss">
+        <input type="text" id="note_text" />
+        <ul id="stickies">
+			<li>
+				<span class="sticky">我的评论</span>
+			</li>
+		</ul>
+    </div>
+</body>
+<script>
+    var wp_playBtn=document.getElementById("wp_playBtn");
+    var mymusic=document.getElementById("mymusic");
+    var wp_playTime=document.getElementById("wp_playTime");
+    var wp_processBar=document.getElementById("wp_processBar");
+    var wp_processBtn=document.getElementById("wp_processBtn");
+    var wp_mute=document.getElementById("wp_mute");
+    var noteText=document.getElementById("note_text");
+    var stickies=document.getElementById("stickies");
+    var n=0;
+    var v=0;
+    var mycanvas=document.getElementById("mycanvas");
+    var context=mycanvas.getContext("2d");
+    var myCanvas=document.getElementById("my-canvas");
+    var cxt=myCanvas.getContext("2d");
+    var img=new Image();
+    img.src="./images/1.jpg";
+    img.onload=function(){
+        context.drawImage(img,0,0,260,260);
+        context.beginPath();
+        context.strokeStyle="gray";
+        context.arc(130,130,10,0,Math.PI*2);
+        context.stroke();
+        context.beginPath();
+        context.strokeStyle="gray";
+        context.arc(130,130,30,0,Math.PI*2);
+        context.stroke();
+    }
+    var imgObj=new Image();
+    imgObj.src="./images/8.png";
+    imgObj.onload=function(){
+        cxt.drawImage(imgObj,0,0,70,70);
+    }
+     wp_playBtn.onclick=function(){
+          if(n%2==0){
+              mymusic.play();
+              progressBar();
+              playTimes();
+              this.style.backgroundPosition=-138 +"px "+ -194+"px";
+          }
+          else{
+              mymusic.pause();
+              this.style.backgroundPosition=-137 +"px "+ -113+"px";
+          }
+          n++;
+      }
+      function progressBar(){
+          var lenth=mymusic.duration;
+          timer1=setInterval(function(){
+              cur=mymusic.currentTime;//获取当前的播放时间
+             // wp_processBtn.style.left=(cur)*100/lenth+"%";
+              wp_processBar.style.width=parseInt((cur)*100/lenth+"%")+"px";
+              wp_processBtn.style.left=parseInt(wp_processBar.style.width)+"px";
+            },1000)
+      }
+      function playTimes(){
+          timer2=setInterval(function(){
+              cur=parseInt(mymusic.currentTime);//秒数
+              var minute=parseInt(cur/60);
+              if (minute<10) {
+                  if(cur%60<10){
+                    wp_playTime.innerHTML="0"+minute+":0"+cur%60+"";
+                  }
+                  else{
+                    wp_playTime.innerHTML="0"+minute+":"+cur%60+"";
+                  }
+              }
+              else{
+                  if(cur%60<10){
+                    wp_playTime.innerText= minute+":0"+cur%60+"";
+                  }
+                  else{
+                    wp_playTime.innerText= minute+":"+cur%60+"";
+                  }
+              }
+          },1000);
+      }
+      wp_mute.onclick=function(){
+        if(v%2==0){
+          mymusic.muted=true;
+        }
+        else{
+          mymusic.muted=false;
+        }
+        v++;
+      }
+      function saveNote(noteContent){
+            var noteList=localStorage['noteList'];
+            if(noteList==null||noteList==""){
+                noteList='[]';
+            }
+            noteList=JSON.parse(noteList);
+            var noteObj={
+                noteId:noteList.length,
+                noteConcent:noteContent
+            }
+            noteList.push(noteObj);
+            noteList=JSON.stringify(noteList);
+            localStorage['noteList']=noteList;
+            var now=date.getFullYear()+"-"+date.getMonth()+1+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+            //console.log(noteList);
+        }
+        function getNotes(){
+            stickies.innerHTML="";
+            var noteList=localStorage['noteList'];
+            noteList = JSON.parse(noteList);
+
+            for (var i=0;i<noteList.length;i++){
+                var liNode=document.createElement("li");
+                liNode.setAttribute("noteid",noteList[i]['noteId']);
+                liNode.innerHTML="<span class='sticky'>"+noteList[i]['noteContent']+"</span>";
+                stickies.appendChild(liNode);
+            }
+        }
+        window.onload=function(){
+            getNotes();
+        }
+</script>
+</html>
